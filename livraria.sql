@@ -4,8 +4,9 @@ Implemente um Banco de Dados chamado “Livraria”. Após, implemente as tabela
 create database Livraria;
 use Livraria;
 select database();
+
 create table Cliente (
-	idCliente int primary key,
+    idCliente int primary key not null,
     nome varchar(50) not null,
     telefone varchar(20) not null,
     email varchar(50) not null,
@@ -13,16 +14,15 @@ create table Cliente (
 );
 
 create table Pedido (
-	idPedido int primary key,
-    idCliente int,
-    constraint fkIdCliente foreign key (idCliente)
-    references Cliente(idCliente),
+    idPedido int primary key not null,
+    idCliente int not null,
     dataPedido date not null,
-    valorPedido decimal(5,2) not null
+    valorPedido decimal(5,2) not null,
+    constraint fkIdCliente foreign key (idCliente) references Cliente(idCliente)
 );
 
 create table Editora (
-	idEditora int primary key,
+    idEditora int primary key not null,
     nome varchar(50) not null,
     telefone varchar(20) not null,
     email varchar(50) not null,
@@ -30,33 +30,29 @@ create table Editora (
 );
 
 create table Livro (
-	idLivro int primary key,
-    idEditora int,
-    constraint fkIdEditora foreign key (idEditora)
-    references Editora(idEditora),
+    idLivro int primary key not null,
+    idEditora int not null,
     titulo varchar(100) not null,
     autor varchar(50) not null,
     ano int not null,
     ISBN varchar(20) not null,
-    preco decimal(5,2) not null
+    preco decimal(5,2) not null,
+    constraint fkIdEditora foreign key (idEditora) references Editora(idEditora)
 );
 
 create table itemPedido (
-	idPedido int,
-    constraint fkIdPedido foreign key (idPedido)
-    references Pedido(idPedido),
-    idLivro int,
-    constraint fkIdLivro foreign key (idLivro)
-    references Livro(idLivro),
+    idPedido int not null,
+    idLivro int not null, 
     quantidade int not null,
-    valorItemPedido decimal(5,2) not null
+    valorItemPedido decimal(5,2) not null,
+    constraint fkIdPedido foreign key (idPedido) references Pedido(idPedido),
+    constraint fkIdLivro foreign key (idLivro) references Livro(idLivro)
 );
 
 create table Estoque (
-    idLivro int,
-    constraint fkIdLivroEstoque foreign key (idLivro)
-    references Livro(idLivro),
-    quantidade int not null
+    idLivro int not null,
+    quantidade int not null,
+    constraint fkIdLivroEstoque foreign key (idLivro) references Livro(idLivro)
 );
 
 /*
