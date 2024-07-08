@@ -40,7 +40,7 @@ create table Livro (
     constraint fkIdEditora foreign key (idEditora) references Editora(idEditora)
 );
 
-create table itemPedido (
+create table ItemPedido (
     idPedido int not null,
     idLivro int not null, 
     quantidade int not null,
