@@ -83,7 +83,15 @@ group by Editora.nome;
 /*
 Implemente uma consulta para listar o nome de todos os clientes e a quantidade de títulos de livros comprados pelos mesmos. Para isso, utilize o comando group by.
 */
-select nome, count(idPedido) AS 'Quantidade de títulos comprados'
-from Cliente
-inner join Pedido on Cliente.idCliente = Pedido.idCliente
-group by nome;
+SELECT
+    c.nome AS NomeCliente,
+    SUM(ip.quantidade) AS QuantidaDeLivrosComprados
+FROM
+    Cliente c
+    JOIN Pedido p ON c.idCliente = p.idCliente
+    JOIN ItemPedido ip ON p.idPedido = ip.idPedido
+GROUP BY
+    c.idCliente, c.nome
+ORDER BY
+    c.nome;
+
